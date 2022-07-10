@@ -1,0 +1,30 @@
+body {
+  background-color: rgba(253, 253, 253, 0.979);
+  font-family: "EB Garamond", "Maven Pro", serif;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+@media (min-width: 0) and (max-width: 1511px) and (orientation: landscape) {
+  .body {
+    font-size: calc((1.2 - 1) * 1.2vw + 1rem);
+  }
+}
+
+button {
+  font-family: "EB Garamond", "Maven Pro", serif;
+}
+
+a {
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  border: 0;
+}
