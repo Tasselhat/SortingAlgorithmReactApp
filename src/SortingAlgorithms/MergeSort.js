@@ -1,34 +1,3 @@
-
-
-export function bubbleSort(array) {
-    //avg runtime O(n^2), already sorted array is O(n) which is good
-    const length = array.length;
-    let swapped = false;
-  
-    for (let i = 0; i < length; i++) {
-      //start iterative loop that runs n times
-  
-      swapped = false; //set boolean to check if the array is already sorted
-  
-      for (let j = 0; j < length; j++) {
-        // second iteration to compare each element of the array and swap the smaller one to the left, or do nothing if the smaller is already left
-  
-        if (array[j] > array[j + 1]) {
-          let temp = array[j];
-          array[j] = array[j + 1];
-          array[j + 1] = temp;
-          swapped = true; //if a swap is made continue the loop
-        }
-      }
-  
-      if (!swapped) {
-        //once no elements are swapper or the main loop runs n number of times break
-        return;
-      }
-    }
-  }
-
-
 export const selectionSort = (array) => {
   //avg runtime O(n^2), best case also O(n^2), slightly better than bubble and gnome
 

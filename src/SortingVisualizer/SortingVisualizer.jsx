@@ -41,6 +41,18 @@ export default class SortingVisualizer extends React.Component {
     this.setState({ array });
   }
 
+  reverseArray() {
+    const array = [];
+    let i = 420;
+    let x = 845;
+    while (i >= 0) {
+      array.push(x);
+      i--;
+      x -= 2;
+    }
+    this.setState({ array });
+  }
+
   shuffle(array) {
     let currentIndex = array.length,
       randomIndex;
@@ -59,40 +71,6 @@ export default class SortingVisualizer extends React.Component {
     }
 
     return array;
-  }
-
-  render() {
-    const { array } = this.state;
-
-    return (
-      <div className="container">
-        <div className="array_container">
-          {array.map((value, idx) => (
-            <div
-              className="array_bar"
-              key={idx}
-              style={{ height: `${value}px` }}
-            ></div>
-          ))}
-        </div>
-        <button onClick={() => this.resetArray()}>
-          Generate New Random Array
-        </button>
-        <button onClick={() => this.linearArray()}>
-          Generate New Linear Array
-        </button>
-        <button onClick={() => this.bubbleSort()}> Bubble sort </button>
-        <button onClick={() => this.insertionSort()}> Insertion Sort </button>
-        <button onClick={() => this.gnomeSort()}> Gnome Sort </button>
-        <button onClick={() => this.selectionSort()}> Selection Sort </button>
-        <button onClick={() => this.mergeSort()}> Merge Sort </button>
-        <button onClick={() => this.quickSort()}> Quick Sort </button>
-        <button onClick={() => this.timSort()}> Tim Sort </button>
-        <button onClick={() => this.testSortingAlgorithms()}>
-          Test Sorting Algorithms
-        </button>
-      </div>
-    );
   }
 
   insertionSort() {
@@ -130,8 +108,8 @@ export default class SortingVisualizer extends React.Component {
       if (isColorChange) {
         const color = i % 4 === 0 ? "red" : "royalblue";
         let [bar1Indx, bar2Indx] = animations[i];
-        if (bar2Indx>420) {
-            bar2Indx = 420;
+        if (bar2Indx > 420) {
+          bar2Indx = 420;
         }
         const bar1Style = arrayBars[bar1Indx].style;
         const bar2Style = arrayBars[bar2Indx].style;
@@ -165,13 +143,13 @@ export default class SortingVisualizer extends React.Component {
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
           barTwoStyle.backgroundColor = color;
-        }, i*3);
+        }, i * 3);
       } else {
         setTimeout(() => {
           const [barOneIndx, newHeight] = animations[i];
           const barOneStyle = arrayBars[barOneIndx].style;
           barOneStyle.height = `${newHeight}px`;
-        }, i*3);
+        }, i * 3);
       }
     }
   }
@@ -195,6 +173,43 @@ export default class SortingVisualizer extends React.Component {
       console.log(arraysAreEqual(javaScriptSortedArray, insertionSortedArray));
       console.log(arraysAreEqual(javaScriptSortedArray, selectionSortedArray));
     }
+  }
+
+  render() {
+    const { array } = this.state;
+
+    return (
+      <div className="container">
+        <div className="array_container">
+          {array.map((value, idx) => (
+            <div
+              className="array_bar"
+              key={idx}
+              style={{ height: `${value}px` }}
+            ></div>
+          ))}
+        </div>
+        <button onClick={() => this.resetArray()}>
+          Generate New Random Array
+        </button>
+        <button onClick={() => this.linearArray()}>
+          Generate New Linear Array
+        </button>
+        <button onClick={() => this.reverseArray()}>
+          Generate New Reversed Array
+        </button>
+        <button onClick={() => this.bubbleSort()}> Bubble sort </button>
+        <button onClick={() => this.insertionSort()}> Insertion Sort </button>
+        <button onClick={() => this.gnomeSort()}> Gnome Sort </button>
+        <button onClick={() => this.selectionSort()}> Selection Sort </button>
+        <button onClick={() => this.mergeSort()}> Merge Sort </button>
+        <button onClick={() => this.quickSort()}> Quick Sort </button>
+        <button onClick={() => this.timSort()}> Tim Sort </button>
+        <button onClick={() => this.testSortingAlgorithms()}>
+          Test Sorting Algorithms
+        </button>
+      </div>
+    );
   }
 }
 
