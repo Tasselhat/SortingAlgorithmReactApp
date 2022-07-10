@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/react-gh-pages/static/css/main.666c35b8.css",
-    "main.js": "/react-gh-pages/static/js/main.f7999f34.js",
-    "static/js/787.6337b9e7.chunk.js": "/react-gh-pages/static/js/787.6337b9e7.chunk.js",
-    "index.html": "/react-gh-pages/index.html",
-    "main.666c35b8.css.map": "/react-gh-pages/static/css/main.666c35b8.css.map",
-    "main.f7999f34.js.map": "/react-gh-pages/static/js/main.f7999f34.js.map",
-    "787.6337b9e7.chunk.js.map": "/react-gh-pages/static/js/787.6337b9e7.chunk.js.map"
+    "main.css": "/SortingAlgorithmReactApp/static/css/main.666c35b8.css",
+    "main.js": "/SortingAlgorithmReactApp/static/js/main.ad0ff0be.js",
+    "static/js/787.6337b9e7.chunk.js": "/SortingAlgorithmReactApp/static/js/787.6337b9e7.chunk.js",
+    "index.html": "/SortingAlgorithmReactApp/index.html",
+    "main.666c35b8.css.map": "/SortingAlgorithmReactApp/static/css/main.666c35b8.css.map",
+    "main.ad0ff0be.js.map": "/SortingAlgorithmReactApp/static/js/main.ad0ff0be.js.map",
+    "787.6337b9e7.chunk.js.map": "/SortingAlgorithmReactApp/static/js/787.6337b9e7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.666c35b8.css",
-    "static/js/main.f7999f34.js"
+    "static/js/main.ad0ff0be.js"
   ]
 }
