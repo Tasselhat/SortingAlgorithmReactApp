@@ -1,12 +1,12 @@
 import React from "react";
-import { mergeSortAnimations } from "../SortingAlgorithms/MergeSort.js";
+import { getMergeSort } from "../SortingAlgorithms/MergeSort.js";
 import { getBubbleSort } from "../SortingAlgorithms/BubbleSort.js";
 import { getInsertionSort } from "../SortingAlgorithms/InsertionSort.js";
 import { getGnomeSort } from "../SortingAlgorithms/GnomeSort.js";
 import { getSelectionSort } from "../SortingAlgorithms/SelectionSort";
 import "./SortingVisualizer.css";
 
-let speed = 1;
+const speed = 1;
 const SLOW_ALG_ANIMATION_SPEED_MS = 0.05 * speed;
 const FAST_ALG_ANIMATION_SPEED_MS = 3 * speed;
 const DEFAULT_COLOR = "royalblue";
@@ -44,7 +44,7 @@ export default class SortingVisualizer extends React.Component {
       i++;
       x += 2;
     }
-    this.shuffle(array);
+    shuffle(array);
 
     this.setState({ array });
   }
@@ -61,33 +61,13 @@ export default class SortingVisualizer extends React.Component {
     this.setState({ array });
   }
 
-  shuffle(array) {
-    let currentIndex = array.length,
-      randomIndex;
-
-    // While there remain elements to shuffle.
-    while (currentIndex !== 0) {
-      // Pick a remaining element.
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ];
-    }
-
-    return array;
-  }
-
   selectionSort() {
     const animations = getSelectionSort(this.state.array);
     console.log(animations);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName("array_bar");
-      const isColorChange = animations[i].length < 4 ;
-      if (isColorChange) {        
+      const isColorChange = animations[i].length < 4;
+      if (isColorChange) {
         let color = SECONDARY_COLOR;
         if (i >= 1) {
           if (animations[i].length === 3 && animations[i - 1].length === 2) {
@@ -209,7 +189,7 @@ export default class SortingVisualizer extends React.Component {
   }
 
   mergeSort() {
-    const animations = mergeSortAnimations(this.state.array);
+    const animations = getMergeSort(this.state.array);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName("array_bar");
       const isColorChange = i % 3 !== 2;
@@ -294,4 +274,24 @@ function arraysAreEqual(array1, array2) {
     if (array1[i] !== array2[i]) return false;
   }
   return true;
+}
+
+function shuffle(array) {
+  let currentIndex = array.length,
+    randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex !== 0) {
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+
+  return array;
 }
