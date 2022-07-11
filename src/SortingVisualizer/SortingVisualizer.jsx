@@ -1,8 +1,16 @@
 import React from "react";
 import { mergeSortAnimations } from "../SortingAlgorithms/MergeSort.js";
 import { getBubbleSort } from "../SortingAlgorithms/BubbleSort.js";
-import * as shit from "../SortingAlgorithms/MergeSort.js";
+import { getInsertionSort } from "../SortingAlgorithms/InsertionSort.js";
+import { getGnomeSort } from "../SortingAlgorithms/GnomeSort.js";
+import { getSelectionSort } from "../SortingAlgorithms/SelectionSort";
 import "./SortingVisualizer.css";
+
+let speed = 1;
+const SLOW_ALG_ANIMATION_SPEED_MS = 0.05 * speed;
+const FAST_ALG_ANIMATION_SPEED_MS = 3 * speed;
+const DEFAULT_COLOR = "royalblue";
+const SECONDARY_COLOR = "red";
 
 export default class SortingVisualizer extends React.Component {
   constructor(props) {
@@ -43,11 +51,11 @@ export default class SortingVisualizer extends React.Component {
 
   reverseArray() {
     const array = [];
-    let i = 420;
+    let i = 0;
     let x = 845;
-    while (i >= 0) {
+    while (i <= 420) {
       array.push(x);
-      i--;
+      i++;
       x -= 2;
     }
     this.setState({ array });
@@ -73,31 +81,101 @@ export default class SortingVisualizer extends React.Component {
     return array;
   }
 
-  insertionSort() {
-    const javaScriptSortedArray = this.state.array
-      .slice()
-      .sort((a, b) => a - b);
-    const sortedArray = shit.insertionSort(this.state.array);
-
-    console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
+  selectionSort() {
+    const animations = getSelectionSort(this.state.array);
+    console.log(animations);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName("array_bar");
+      const isColorChange = animations[i].length < 4 ;
+      if (isColorChange) {        
+        let color = SECONDARY_COLOR;
+        if (i >= 1) {
+          if (animations[i].length === 3 && animations[i - 1].length === 2) {
+            color = DEFAULT_COLOR;
+          }
+        }
+        const [bar1Indx, bar2Indx] = animations[i];
+        const bar1Style = arrayBars[bar1Indx].style;
+        const bar2Style = arrayBars[bar2Indx].style;
+        setTimeout(() => {
+          bar1Style.backgroundColor = color;
+          bar2Style.backgroundColor = color;
+        }, i * SLOW_ALG_ANIMATION_SPEED_MS);
+      } else if (animations[i].length === 4) {
+        const [bar1Indx, newHeight] = animations[i];
+        if (bar1Indx === -1) {
+          continue;
+        }
+        setTimeout(() => {
+          const barStyle = arrayBars[bar1Indx].style;
+          barStyle.height = `${newHeight}px`;
+        }, i * SLOW_ALG_ANIMATION_SPEED_MS);
+      }
+    }
   }
 
   gnomeSort() {
-    const javaScriptSortedArray = this.state.array
-      .slice()
-      .sort((a, b) => a - b);
-    const sortedArray = shit.gnomeSort(this.state.array);
-
-    console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
+    const animations = getGnomeSort(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName("array_bar");
+      const isColorChange = animations[i].length === 2;
+      if (isColorChange) {
+        let color = SECONDARY_COLOR;
+        if (i >= 1) {
+          if (animations[i].length === 2 && animations[i - 1].length === 2) {
+            color = DEFAULT_COLOR;
+          }
+        }
+        const [bar1Indx, bar2Indx] = animations[i];
+        const bar1Style = arrayBars[bar1Indx].style;
+        const bar2Style = arrayBars[bar2Indx].style;
+        setTimeout(() => {
+          bar1Style.backgroundColor = color;
+          bar2Style.backgroundColor = color;
+        }, i * SLOW_ALG_ANIMATION_SPEED_MS);
+      } else if (animations[i].length === 3) {
+        const [bar1Indx, newHeight] = animations[i];
+        if (bar1Indx === -1) {
+          continue;
+        }
+        setTimeout(() => {
+          const barStyle = arrayBars[bar1Indx].style;
+          barStyle.height = `${newHeight}px`;
+        }, i * SLOW_ALG_ANIMATION_SPEED_MS);
+      }
+    }
   }
 
-  selectionSort() {
-    const javaScriptSortedArray = this.state.array
-      .slice()
-      .sort((a, b) => a - b);
-    const sortedArray = shit.selectionSort(this.state.array);
-
-    console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
+  insertionSort() {
+    const animations = getInsertionSort(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName("array_bar");
+      const isColorChange = animations[i].length === 2;
+      if (isColorChange) {
+        let color = SECONDARY_COLOR;
+        if (i >= 1) {
+          if (animations[i].length === 2 && animations[i - 1].length === 2) {
+            color = DEFAULT_COLOR;
+          }
+        }
+        const [bar1Indx, bar2Indx] = animations[i];
+        const bar1Style = arrayBars[bar1Indx].style;
+        const bar2Style = arrayBars[bar2Indx].style;
+        setTimeout(() => {
+          bar1Style.backgroundColor = color;
+          bar2Style.backgroundColor = color;
+        }, i * SLOW_ALG_ANIMATION_SPEED_MS);
+      } else if (animations[i].length === 3) {
+        const [bar1Indx, newHeight] = animations[i];
+        if (bar1Indx === -1) {
+          continue;
+        }
+        setTimeout(() => {
+          const barStyle = arrayBars[bar1Indx].style;
+          barStyle.height = `${newHeight}px`;
+        }, i * SLOW_ALG_ANIMATION_SPEED_MS);
+      }
+    }
   }
 
   bubbleSort() {
@@ -106,7 +184,7 @@ export default class SortingVisualizer extends React.Component {
       const arrayBars = document.getElementsByClassName("array_bar");
       const isColorChange = i % 4 === 0 || i % 4 === 1;
       if (isColorChange) {
-        const color = i % 4 === 0 ? "red" : "royalblue";
+        const color = i % 4 === 0 ? SECONDARY_COLOR : DEFAULT_COLOR;
         let [bar1Indx, bar2Indx] = animations[i];
         if (bar2Indx > 420) {
           bar2Indx = 420;
@@ -116,7 +194,7 @@ export default class SortingVisualizer extends React.Component {
         setTimeout(() => {
           bar1Style.backgroundColor = color;
           bar2Style.backgroundColor = color;
-        }, 1);
+        }, i * SLOW_ALG_ANIMATION_SPEED_MS);
       } else {
         const [bar1Indx, newHeight] = animations[i];
         if (bar1Indx === -1) {
@@ -125,7 +203,7 @@ export default class SortingVisualizer extends React.Component {
         setTimeout(() => {
           const barStyle = arrayBars[bar1Indx].style;
           barStyle.height = `${newHeight}px`;
-        }, 1);
+        }, i * SLOW_ALG_ANIMATION_SPEED_MS);
       }
     }
   }
@@ -139,17 +217,17 @@ export default class SortingVisualizer extends React.Component {
         const [barOneIndx, barTwoIndx] = animations[i];
         const barOneStyle = arrayBars[barOneIndx].style;
         const barTwoStyle = arrayBars[barTwoIndx].style;
-        const color = i % 3 === 0 ? "red" : "royalblue";
+        const color = i % 3 === 0 ? SECONDARY_COLOR : DEFAULT_COLOR;
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
           barTwoStyle.backgroundColor = color;
-        }, i * 3);
+        }, i * FAST_ALG_ANIMATION_SPEED_MS);
       } else {
         setTimeout(() => {
           const [barOneIndx, newHeight] = animations[i];
           const barOneStyle = arrayBars[barOneIndx].style;
           barOneStyle.height = `${newHeight}px`;
-        }, i * 3);
+        }, i * FAST_ALG_ANIMATION_SPEED_MS);
       }
     }
   }
@@ -165,13 +243,6 @@ export default class SortingVisualizer extends React.Component {
       for (let i = 0; i < legnth; i++) {
         array.push(randomIntFromInterval(-1000, 1000));
       }
-      const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-      const gnomeSortedArray = shit.gnomeSort(array.slice());
-      const insertionSortedArray = shit.insertionSort(array.slice());
-      const selectionSortedArray = shit.selectionSort(array.slice());
-      console.log(arraysAreEqual(javaScriptSortedArray, gnomeSortedArray));
-      console.log(arraysAreEqual(javaScriptSortedArray, insertionSortedArray));
-      console.log(arraysAreEqual(javaScriptSortedArray, selectionSortedArray));
     }
   }
 
