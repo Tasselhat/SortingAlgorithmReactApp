@@ -4,11 +4,12 @@ import { getBubbleSort } from "../SortingAlgorithms/BubbleSort.js";
 import { getInsertionSort } from "../SortingAlgorithms/InsertionSort.js";
 import { getGnomeSort } from "../SortingAlgorithms/GnomeSort.js";
 import { getSelectionSort } from "../SortingAlgorithms/SelectionSort";
+import { getQuickSort } from "../SortingAlgorithms/QuickSort.js";
 import "./SortingVisualizer.css";
 
 const speed = 1;
 const SLOW_ALG_ANIMATION_SPEED_MS = 0.05 * speed;
-const FAST_ALG_ANIMATION_SPEED_MS = 3 * speed;
+const FAST_ALG_ANIMATION_SPEED_MS = 2 * speed;
 const DEFAULT_COLOR = "royalblue";
 const SECONDARY_COLOR = "red";
 
@@ -63,7 +64,6 @@ export default class SortingVisualizer extends React.Component {
 
   selectionSort() {
     const animations = getSelectionSort(this.state.array);
-    console.log(animations);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName("array_bar");
       const isColorChange = animations[i].length < 4;
@@ -212,14 +212,44 @@ export default class SortingVisualizer extends React.Component {
     }
   }
 
-  quickSort() {}
+  quickSort() {
+    const animations = getQuickSort(this.state.array);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName("array_bar");
+      const isColorChange = animations[i].length === 2;
+      if (isColorChange) {
+        let color = SECONDARY_COLOR;
+        if (i >= 1) {
+          if (animations[i].length === 2 && animations[i - 1].length === 2) {
+            color = DEFAULT_COLOR;
+          }
+        }
+        const [bar1Indx, bar2Indx] = animations[i];
+        const bar1Style = arrayBars[bar1Indx].style;
+        const bar2Style = arrayBars[bar2Indx].style;
+        setTimeout(() => {
+          bar1Style.backgroundColor = color;
+          bar2Style.backgroundColor = color;
+        }, i * FAST_ALG_ANIMATION_SPEED_MS);
+      } else if (animations[i].length === 3) {
+        const [bar1Indx, newHeight] = animations[i];
+        if (bar1Indx === -1) {
+          continue;
+        }
+        setTimeout(() => {
+          const barStyle = arrayBars[bar1Indx].style;
+          barStyle.height = `${newHeight}px`;
+        }, i * FAST_ALG_ANIMATION_SPEED_MS);
+      }
+    }
+  }
 
   timSort() {}
 
   testSortingAlgorithms() {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 10; i++) {
       const array = [];
-      const legnth = randomIntFromInterval(1, 1000);
+      const legnth = randomIntFromInterval(1, 100);
       for (let i = 0; i < legnth; i++) {
         array.push(randomIntFromInterval(-1000, 1000));
       }
