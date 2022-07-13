@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/SortingAlgorithmReactApp/static/css/main.666c35b8.css",
-    "main.js": "/SortingAlgorithmReactApp/static/js/main.7d6ee864.js",
+    "main.css": "/SortingAlgorithmReactApp/static/css/main.04068932.css",
+    "main.js": "/SortingAlgorithmReactApp/static/js/main.251e35ca.js",
     "static/js/787.6337b9e7.chunk.js": "/SortingAlgorithmReactApp/static/js/787.6337b9e7.chunk.js",
     "index.html": "/SortingAlgorithmReactApp/index.html",
-    "main.666c35b8.css.map": "/SortingAlgorithmReactApp/static/css/main.666c35b8.css.map",
-    "main.7d6ee864.js.map": "/SortingAlgorithmReactApp/static/js/main.7d6ee864.js.map",
+    "main.04068932.css.map": "/SortingAlgorithmReactApp/static/css/main.04068932.css.map",
+    "main.251e35ca.js.map": "/SortingAlgorithmReactApp/static/js/main.251e35ca.js.map",
     "787.6337b9e7.chunk.js.map": "/SortingAlgorithmReactApp/static/js/787.6337b9e7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.666c35b8.css",
-    "static/js/main.7d6ee864.js"
+    "static/css/main.04068932.css",
+    "static/js/main.251e35ca.js"
   ]
 }
