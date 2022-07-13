@@ -3,7 +3,7 @@
 }
 
 .array_bar {
-  width: 2px;
+  width: 0.5vw;
   background-color: royalblue;
   display: inline-block;
   margin: 0 1px;
@@ -14,5 +14,5 @@
   display: flex;
   align-items: center;
   height: 85vh;
-  margin-left: 100px;
+  margin-left: 4vw;
 }

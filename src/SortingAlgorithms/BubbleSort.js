@@ -13,23 +13,21 @@ function bubbleSort(auxiliaryArray, animations) {
   for (let i = 0; i < length; i++) {
     // Start iterative loop that runs n times
     // Set boolean to check if the array is already sorted
-    swapped = false; 
+    swapped = false;
     for (let j = 0; j < length; j++) {
-      // Second iteration to compare each element of the array 
+      // Second iteration to compare each element of the array
       // and swap the smaller one to the left, or do nothing if the smaller is already left
       animations.push([j, j + 1]); //Compare, change color
       animations.push([j, j + 1]); //Compare, revert color
+
       if (auxiliaryArray[j] > auxiliaryArray[j + 1]) {
-        animations.push([j, auxiliaryArray[j + 1]]); //Animate swap
-        animations.push([j + 1, auxiliaryArray[j]]); //Animate swap
+        animations.push([j, auxiliaryArray[j + 1], -1]); //Animate swap
+        animations.push([j + 1, auxiliaryArray[j], -1]); //Animate swap
+
         let temp = auxiliaryArray[j];
         auxiliaryArray[j] = auxiliaryArray[j + 1];
         auxiliaryArray[j + 1] = temp;
-        // If a swap is made continue the loop
-        swapped = true; 
-      } else {
-        animations.push([-1, -1]); //Animation dud
-        animations.push([-1, -1]); //Animation dud
+        swapped = true; // If a swap is made continue the loop
       }
     }
 
