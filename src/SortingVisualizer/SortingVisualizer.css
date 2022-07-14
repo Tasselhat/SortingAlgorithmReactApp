@@ -1,9 +1,9 @@
 .container {
-  padding-top: 100px;
+  padding-top: 9.5vh;
 }
 
 .array_bar {
-  width: 0.5vw;
+  width: 3px;
   background-color: royalblue;
   display: inline-block;
   margin: 0 1px;
@@ -14,5 +14,12 @@
   display: flex;
   align-items: center;
   height: 85vh;
-  margin-left: 4vw;
+  margin-left: 3vw;
+  margin-right: 3vw;
+}
+
+.control_container {
+  display: flex;
+  margin: 10px 48px 10px 48px;
+  justify-content: space-around;
 }

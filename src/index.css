@@ -11,3 +11,78 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+button {
+  font-weight: 500;
+  font-style: normal;
+  font-size: calc(0.05 * 1vw + 1rem);
+  letter-spacing: 0em;
+  text-transform: none;
+  line-height: 1.6em;
+
+  background: transparent;
+  border-color: #ffcd00;
+  color: black;
+  border-style: solid;
+  cursor: pointer;
+  border-width: 1px;
+  border-radius: 2px;
+  padding: 0.3vw 0.4vw 0.3vw 0.4vw;
+  margin-right: 0.1vw;
+  margin-left: 0.1vw;
+  transition: background-color 200ms, color 60ms, padding 200ms, margin 200ms;
+}
+
+button:hover {
+  background-color: #ffcd00;
+  color: black;
+  padding-left: 0.5vw;
+  padding-right: 0.5vw;
+  opacity: 0.9;
+  margin-left: 0;
+  margin-right: 0;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.22);
+}
+
+button:active {
+  opacity: 0.6;
+}
+
+/* ReactSlider CSS */
+
+.speedSlider {
+  max-width: 250px;
+  flex: 1;
+}
+
+.speedSlider_track {
+  /* Top value to align your track to the center of your thumb */
+  top: 3px;
+  /* thickness of the track */
+  height: 8px;
+ /* default color of your track */
+  background: royalblue;
+
+  border-radius: 10px;
+}
+
+.speedSlider-track.customSlider-track-0 {
+  /* color of the track before the thumb */
+  background: black;
+}
+
+.speedSlider_thumb {
+  cursor: pointer;
+  /*color for the thumb */
+  background: black;
+  /* shape of the thumb: circle */
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  /* remove default outline when selected */
+  outline: none;
+}
+
+.speedSlider_thumb:hover {
+  box-shadow: 0 0 2px 8px hsl(48, 100%, 50%, 0.6);
+}
