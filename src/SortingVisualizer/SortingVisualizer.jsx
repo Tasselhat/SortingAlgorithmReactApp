@@ -1,5 +1,4 @@
 import React from "react";
-import ReactSlider from "react-slider";
 import { getBubbleSort } from "../SortingAlgorithms/BubbleSort.js";
 import { getGnomeSort } from "../SortingAlgorithms/GnomeSort.js";
 import { getInsertionSort } from "../SortingAlgorithms/InsertionSort.js";
@@ -7,18 +6,26 @@ import { getMergeSort } from "../SortingAlgorithms/MergeSort.js";
 import { getQuickSort } from "../SortingAlgorithms/QuickSort.js";
 import { getSelectionSort } from "../SortingAlgorithms/SelectionSort";
 import "./SortingVisualizer.css";
-import "../index.css"
+import "../index.css";
 
-const arraySizeMediaQ1 = window.matchMedia("(min-width: 551px) and (max-width: 1000px)");
-const arraySizeMediaQ2 = window.matchMedia("(min-width: 1001px) and (max-width: 1600px)");
-const arraySizeMediaQ3 = window.matchMedia("(min-width: 1601px) and (max-width: 2559px)");
-const arraySizeMediaQ4 = window.matchMedia("(min-width: 2560px) and (max-width: 2959px)");
+const arraySizeMediaQ1 = window.matchMedia(
+  "(min-width: 551px) and (max-width: 1000px)"
+);
+const arraySizeMediaQ2 = window.matchMedia(
+  "(min-width: 1001px) and (max-width: 1600px)"
+);
+const arraySizeMediaQ3 = window.matchMedia(
+  "(min-width: 1601px) and (max-width: 2559px)"
+);
+const arraySizeMediaQ4 = window.matchMedia(
+  "(min-width: 2560px) and (max-width: 2959px)"
+);
 const arraySizeMediaQ5 = window.matchMedia("(min-width: 2960px)");
-const SPEED = 2;
-const SLOW_ALG_ANIMATION_SPEED_MS = 0.05 * SPEED;
-const FAST_ALG_ANIMATION_SPEED_MS = 1 * SPEED;
+let SPEED = 1;
+let SLOW_ALG_ANIMATION_SPEED_MS = 0.01 * SPEED;
+let FAST_ALG_ANIMATION_SPEED_MS = 1 * SPEED;
 let ARRAY_SIZE = 100;
-if(arraySizeMediaQ1.matches) {
+if (arraySizeMediaQ1.matches) {
   ARRAY_SIZE = 150;
 } else if (arraySizeMediaQ2.matches) {
   ARRAY_SIZE = 200;
@@ -43,6 +50,8 @@ export default class SortingVisualizer extends React.Component {
 
   componentDidMount() {
     this.resetArray();
+    document.getElementById("changeSpeed").value = 1;
+    changeSpeedFunction();
   }
 
   resetArray() {
@@ -54,6 +63,7 @@ export default class SortingVisualizer extends React.Component {
     }
 
     this.setState({ array });
+    changeSpeedFunction();
     this.forceUpdate();
   }
 
@@ -64,7 +74,7 @@ export default class SortingVisualizer extends React.Component {
     while (i <= ARRAY_SIZE) {
       array.push(x);
       i++;
-      if(arraySizeMediaQ1.matches) {
+      if (arraySizeMediaQ1.matches) {
         x += 5;
       } else if (arraySizeMediaQ2.matches) {
         x += 4;
@@ -81,6 +91,7 @@ export default class SortingVisualizer extends React.Component {
     shuffle(array);
 
     this.setState({ array });
+    changeSpeedFunction();
     this.forceUpdate();
   }
 
@@ -91,7 +102,7 @@ export default class SortingVisualizer extends React.Component {
     while (i <= ARRAY_SIZE) {
       array.push(startBarHeight);
       i++;
-      if(arraySizeMediaQ1.matches) {
+      if (arraySizeMediaQ1.matches) {
         startBarHeight -= 5;
       } else if (arraySizeMediaQ2.matches) {
         startBarHeight -= 4;
@@ -107,11 +118,13 @@ export default class SortingVisualizer extends React.Component {
     }
 
     this.setState({ array });
+    changeSpeedFunction();
     this.forceUpdate();
   }
 
   selectionSort() {
     const animations = getSelectionSort(this.state.array);
+    SPEED = document.getElementById("changeSpeed").value;
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName("array_bar");
       const isColorChange = animations[i].length < 4;
@@ -144,21 +157,25 @@ export default class SortingVisualizer extends React.Component {
 
   gnomeSort() {
     const animations = getGnomeSort(this.state.array);
+    changeSpeedFunction();
     animateSlow(animations);
   }
 
   insertionSort() {
     const animations = getInsertionSort(this.state.array);
+    changeSpeedFunction();
     animateSlow(animations);
   }
 
   bubbleSort() {
     const animations = getBubbleSort(this.state.array);
+    changeSpeedFunction();
     animateSlow(animations);
   }
 
   mergeSort() {
     const animations = getMergeSort(this.state.array);
+    changeSpeedFunction();
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName("array_bar");
       const isColorChange = i % 3 !== 2;
@@ -183,6 +200,7 @@ export default class SortingVisualizer extends React.Component {
 
   quickSort() {
     const animations = getQuickSort(this.state.array);
+    changeSpeedFunction();
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName("array_bar");
       const isColorChange = animations[i].length === 2;
@@ -224,37 +242,40 @@ export default class SortingVisualizer extends React.Component {
               className="array_bar"
               key={idx}
               style={{ height: `${value}px` }}
-              ></div>
-              ))}
+            ></div>
+          ))}
         </div>
         <div className="control_container">
-        <ReactSlider
-         className="speedSlider"
-         trackClassName="speedSlider_track"
-         thumbClassName="speedSlider_thumb"
-        />
-        <button onClick={() => this.resetArray()}>
-          Generate New Random Array
-        </button>
-        <button onClick={() => this.linearArray()}>
-          Generate New Random Linear Array
-        </button>
-        <button onClick={() => this.reversedArray()}>
-          Generate New Reversed Array
-        </button>
-        <button onClick={() => this.bubbleSort()}> Bubble sort </button>
-        <button onClick={() => this.insertionSort()}> Insertion Sort </button>
-        <button onClick={() => this.gnomeSort()}> Gnome Sort </button>
-        <button onClick={() => this.selectionSort()}> Selection Sort </button>
-        <button onClick={() => this.mergeSort()}> Merge Sort </button>
-        <button onClick={() => this.quickSort()}> Quick Sort </button>
-         </div>
+          <input
+            id="changeSpeed"
+            className="speedSlider"
+            type="range"
+            min="1"
+            max="10"
+            onChange={this.handleChange}
+          />
+          <button onClick={() => this.resetArray()}>
+            Generate New Random Array
+          </button>
+          <button onClick={() => this.linearArray()}>
+            Generate New Random Linear Array
+          </button>
+          <button onClick={() => this.reversedArray()}>
+            Generate New Reversed Array
+          </button>
+          <button onClick={() => this.bubbleSort()}> Bubble sort </button>
+          <button onClick={() => this.insertionSort()}> Insertion Sort </button>
+          <button onClick={() => this.gnomeSort()}> Gnome Sort </button>
+          <button onClick={() => this.selectionSort()}> Selection Sort </button>
+          <button onClick={() => this.mergeSort()}> Merge Sort </button>
+          <button onClick={() => this.quickSort()}> Quick Sort </button>
+        </div>
       </div>
     );
   }
 }
 
-function animateSlow (animations) {
+function animateSlow(animations) {
   for (let i = 0; i < animations.length; i++) {
     const arrayBars = document.getElementsByClassName("array_bar");
     const isColorChange = animations[i].length === 2;
@@ -266,7 +287,8 @@ function animateSlow (animations) {
         }
       }
       const [bar1Indx, bar2Indx] = animations[i];
-      if (bar2Indx > ARRAY_SIZE) { //This is for bubble sort, returns an animation bar2Indx value outside the array index due to comparing i to i+1 in it's iterations.
+      if (bar2Indx > ARRAY_SIZE) {
+        //This is for bubble sort, returns an animation bar2Indx value outside the array index due to comparing i to i+1 in it's iterations.
         continue;
       }
       const bar1Style = arrayBars[bar1Indx].style;
@@ -288,6 +310,11 @@ function animateSlow (animations) {
   }
 }
 
+function changeSpeedFunction() {
+  SPEED = document.getElementById("changeSpeed").value;
+  SLOW_ALG_ANIMATION_SPEED_MS = 0.05 * SPEED;
+  FAST_ALG_ANIMATION_SPEED_MS = 1 * SPEED;
+}
 
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -320,4 +347,3 @@ function shuffle(array) {
 
   return array;
 }
-

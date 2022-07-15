@@ -48,41 +48,73 @@ button:active {
   opacity: 0.6;
 }
 
-/* ReactSlider CSS */
-
 .speedSlider {
+  width:max-content;
   max-width: 250px;
   flex: 1;
 }
 
-.speedSlider_track {
-  /* Top value to align your track to the center of your thumb */
-  top: 3px;
-  /* thickness of the track */
-  height: 8px;
- /* default color of your track */
-  background: royalblue;
+input[type="range"] {
+  -webkit-appearance: none;
+   appearance: none;
+   background: transparent;
+   cursor: pointer;
+   width: 15rem;
+}
 
+/* Removes default focus */
+input[type="range"]:focus {
+ outline: none;
+}
+
+/***** Chrome, Safari, Opera and Edge Chromium styles *****/
+/* slider track */
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: #264475;
+  border-radius: 0.5rem;
+  height: 0.5rem;  
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+ -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  margin-top: -3px; /* Centers thumb on the track */
+
+  /*custom styles*/
+  background-color: #ffcd00;
+  height: 1rem;
+  width: 1rem;
   border-radius: 10px;
 }
 
-.speedSlider-track.customSlider-track-0 {
-  /* color of the track before the thumb */
-  background: black;
+input[type="range"]:focus::-webkit-slider-thumb {   
+ border: 1px solid #182b49;
+ outline: 2px solid #182b49;
+ outline-offset: 0.125rem; 
 }
 
-.speedSlider_thumb {
-  cursor: pointer;
-  /*color for the thumb */
-  background: black;
-  /* shape of the thumb: circle */
-  width: 15px;
-  height: 15px;
-  border-radius: 100%;
-  /* remove default outline when selected */
-  outline: none;
+/******** Firefox styles ********/
+/* slider track */
+input[type="range"]::-moz-range-track {
+  background-color: #182b49;
+  border-radius: 0.5rem;
+  height: 0.5rem;
 }
 
-.speedSlider_thumb:hover {
-  box-shadow: 0 0 2px 8px hsl(48, 100%, 50%, 0.6);
+/* slider thumb */
+input[type="range"]::-moz-range-thumb {
+  border: none; /*Removes extra border that FF applies*/
+  border-radius: 0; /*Removes default border-radius that FF applies*/
+
+  /*custom styles*/
+  background-color: #ffcd00;
+  height: 2rem;
+  width: 1rem;
+}
+
+input[type="range"]:focus::-moz-range-thumb {
+ border: 1px solid #182b49;
+ outline: 2px solid #182b49;
+ outline-offset: 0.125rem; 
 }
