@@ -73,8 +73,14 @@
   flex: 1;
   height: 26px;
   color: #ffcd00;
-  margin-left: 1vw;
+  margin: 1vw 0 1vw 1vw;
   background-color: transparent;
+}
+
+@media (max-width: 550px) {
+  .header-socials-nav {
+    flex-wrap: wrap;
+  }
 }
 
 .icon:hover {

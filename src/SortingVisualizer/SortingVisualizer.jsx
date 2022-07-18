@@ -1,10 +1,12 @@
 import React from "react";
+
 import { getBubbleSort } from "../SortingAlgorithms/BubbleSort.js";
 import { getGnomeSort } from "../SortingAlgorithms/GnomeSort.js";
 import { getInsertionSort } from "../SortingAlgorithms/InsertionSort.js";
 import { getMergeSort } from "../SortingAlgorithms/MergeSort.js";
 import { getQuickSort } from "../SortingAlgorithms/QuickSort.js";
 import { getSelectionSort } from "../SortingAlgorithms/SelectionSort";
+
 import "./SortingVisualizer.css";
 import "../index.css";
 
@@ -125,6 +127,7 @@ export default class SortingVisualizer extends React.Component {
   selectionSort() {
     const animations = getSelectionSort(this.state.array);
     SPEED = document.getElementById("changeSpeed").value;
+    // Selection sort was having issues with animating comparisons so it gets it's own function for determining which animation to use
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName("array_bar");
       const isColorChange = animations[i].length < 4;
@@ -135,12 +138,12 @@ export default class SortingVisualizer extends React.Component {
             color = DEFAULT_COLOR;
           }
         }
-        const [bar1Indx, bar2Indx] = animations[i];
-        const bar1Style = arrayBars[bar1Indx].style;
-        const bar2Style = arrayBars[bar2Indx].style;
+        const [bar1Indx, barTwoIndx] = animations[i];
+        const barOneStyle = arrayBars[bar1Indx].style;
+        const barTwoStyle = arrayBars[barTwoIndx].style;
         setTimeout(() => {
-          bar1Style.backgroundColor = color;
-          bar2Style.backgroundColor = color;
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
         }, i * SLOW_ALG_ANIMATION_SPEED_MS);
       } else if (animations[i].length === 4) {
         const [bar1Indx, newHeight] = animations[i];
@@ -158,77 +161,31 @@ export default class SortingVisualizer extends React.Component {
   gnomeSort() {
     const animations = getGnomeSort(this.state.array);
     changeSpeedFunction();
-    animateSlow(animations);
+    animateSort(animations, SLOW_ALG_ANIMATION_SPEED_MS);
   }
 
   insertionSort() {
     const animations = getInsertionSort(this.state.array);
     changeSpeedFunction();
-    animateSlow(animations);
+    animateSort(animations, SLOW_ALG_ANIMATION_SPEED_MS);
   }
 
   bubbleSort() {
     const animations = getBubbleSort(this.state.array);
     changeSpeedFunction();
-    animateSlow(animations);
+    animateSort(animations, SLOW_ALG_ANIMATION_SPEED_MS);
   }
 
   mergeSort() {
     const animations = getMergeSort(this.state.array);
     changeSpeedFunction();
-    for (let i = 0; i < animations.length; i++) {
-      const arrayBars = document.getElementsByClassName("array_bar");
-      const isColorChange = i % 3 !== 2;
-      if (isColorChange) {
-        const [barOneIndx, barTwoIndx] = animations[i];
-        const barOneStyle = arrayBars[barOneIndx].style;
-        const barTwoStyle = arrayBars[barTwoIndx].style;
-        const color = i % 3 === 0 ? SECONDARY_COLOR : DEFAULT_COLOR;
-        setTimeout(() => {
-          barOneStyle.backgroundColor = color;
-          barTwoStyle.backgroundColor = color;
-        }, i * FAST_ALG_ANIMATION_SPEED_MS);
-      } else {
-        setTimeout(() => {
-          const [barOneIndx, newHeight] = animations[i];
-          const barOneStyle = arrayBars[barOneIndx].style;
-          barOneStyle.height = `${newHeight}px`;
-        }, i * FAST_ALG_ANIMATION_SPEED_MS);
-      }
-    }
+    animateSort(animations, FAST_ALG_ANIMATION_SPEED_MS);
   }
 
   quickSort() {
     const animations = getQuickSort(this.state.array);
     changeSpeedFunction();
-    for (let i = 0; i < animations.length; i++) {
-      const arrayBars = document.getElementsByClassName("array_bar");
-      const isColorChange = animations[i].length === 2;
-      if (isColorChange) {
-        let color = SECONDARY_COLOR;
-        if (i >= 1) {
-          if (animations[i].length === 2 && animations[i - 1].length === 2) {
-            color = DEFAULT_COLOR;
-          }
-        }
-        const [bar1Indx, bar2Indx] = animations[i];
-        const bar1Style = arrayBars[bar1Indx].style;
-        const bar2Style = arrayBars[bar2Indx].style;
-        setTimeout(() => {
-          bar1Style.backgroundColor = color;
-          bar2Style.backgroundColor = color;
-        }, i * FAST_ALG_ANIMATION_SPEED_MS);
-      } else if (animations[i].length === 3) {
-        const [bar1Indx, newHeight] = animations[i];
-        if (bar1Indx === -1) {
-          continue;
-        }
-        setTimeout(() => {
-          const barStyle = arrayBars[bar1Indx].style;
-          barStyle.height = `${newHeight}px`;
-        }, i * FAST_ALG_ANIMATION_SPEED_MS);
-      }
-    }
+    animateSort(animations, FAST_ALG_ANIMATION_SPEED_MS);
   }
 
   render() {
@@ -246,22 +203,27 @@ export default class SortingVisualizer extends React.Component {
           ))}
         </div>
         <div className="control_container">
-          <input
-            id="changeSpeed"
-            className="speedSlider"
-            type="range"
-            min="1"
-            max="10"
-            onChange={this.handleChange}
-          />
+          <div className="speedSliderContainer">
+            <p className="speedSliderTitle">Speed</p>
+            &lt; Faster
+            <input
+              id="changeSpeed"
+              className="speedSlider"
+              type="range"
+              min="1"
+              max="10"
+              onChange={this.handleChange}
+            />
+            Slower &gt;
+          </div>
           <button onClick={() => this.resetArray()}>
-            Generate New Random Array
+            Generate Random Array
           </button>
           <button onClick={() => this.linearArray()}>
-            Generate New Random Linear Array
+            Generate Random Linear Array
           </button>
           <button onClick={() => this.reversedArray()}>
-            Generate New Reversed Array
+            Generate Reversed Array
           </button>
           <button onClick={() => this.bubbleSort()}> Bubble sort </button>
           <button onClick={() => this.insertionSort()}> Insertion Sort </button>
@@ -275,7 +237,7 @@ export default class SortingVisualizer extends React.Component {
   }
 }
 
-function animateSlow(animations) {
+function animateSort(animations, speed) {
   for (let i = 0; i < animations.length; i++) {
     const arrayBars = document.getElementsByClassName("array_bar");
     const isColorChange = animations[i].length === 2;
@@ -286,26 +248,26 @@ function animateSlow(animations) {
           color = DEFAULT_COLOR;
         }
       }
-      const [bar1Indx, bar2Indx] = animations[i];
-      if (bar2Indx > ARRAY_SIZE) {
-        //This is for bubble sort, returns an animation bar2Indx value outside the array index due to comparing i to i+1 in it's iterations.
+      const [barOneIndx, barTwoIndx] = animations[i];
+      if (barTwoIndx > ARRAY_SIZE) {
+        //This is for bubble sort, returns an animation barTwoIndx value outside the array index due to comparing i to i+1 in it's iterations.
         continue;
       }
-      const bar1Style = arrayBars[bar1Indx].style;
-      const bar2Style = arrayBars[bar2Indx].style;
+      const barOneStyle = arrayBars[barOneIndx].style;
+      const barTwoStyle = arrayBars[barTwoIndx].style;
       setTimeout(() => {
-        bar1Style.backgroundColor = color;
-        bar2Style.backgroundColor = color;
-      }, i * SLOW_ALG_ANIMATION_SPEED_MS);
+        barOneStyle.backgroundColor = color;
+        barTwoStyle.backgroundColor = color;
+      }, i * speed);
     } else if (animations[i].length === 3) {
-      const [bar1Indx, newHeight] = animations[i];
-      if (bar1Indx === -1) {
+      const [barOneIndx, newHeight] = animations[i];
+      if (barOneIndx === -1) {
         continue;
       }
       setTimeout(() => {
-        const barStyle = arrayBars[bar1Indx].style;
+        const barStyle = arrayBars[barOneIndx].style;
         barStyle.height = `${newHeight}px`;
-      }, i * SLOW_ALG_ANIMATION_SPEED_MS);
+      }, i * speed);
     }
   }
 }

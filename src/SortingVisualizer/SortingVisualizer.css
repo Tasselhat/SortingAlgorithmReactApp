@@ -22,4 +22,5 @@
   display: flex;
   margin: 10px 48px 10px 48px;
   justify-content: space-around;
+  flex-wrap: wrap;
 }

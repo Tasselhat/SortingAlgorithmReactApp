@@ -44,12 +44,12 @@ function doMergeSort(
     if (auxiliaryArray[i] <= auxiliaryArray[j]) {
       // Overwrite the value at index k in the original array with the
       // value at index i in the auxiliary array.
-      animations.push([k, auxiliaryArray[i]]);
+      animations.push([k, auxiliaryArray[i], -1]);
       mainArray[k++] = auxiliaryArray[i++];
     } else {
       // Overwrite the value at index k in the original array with the
       // value at index j in the auxiliary array.
-      animations.push([k, auxiliaryArray[j]]);
+      animations.push([k, auxiliaryArray[j], -1]);
       mainArray[k++] = auxiliaryArray[j++];
     }
   }
@@ -58,7 +58,7 @@ function doMergeSort(
     animations.push([i, i]); //Compare, revert color
     // Overwrite the value at index k in the original array with the
     // value at index i in the auxiliary array.
-    animations.push([k, auxiliaryArray[i]]);
+    animations.push([k, auxiliaryArray[i], -1]);
     mainArray[k++] = auxiliaryArray[i++];
   }
   while (j <= endIndx) {
@@ -66,7 +66,7 @@ function doMergeSort(
     animations.push([j, j]); //Compare, revert color
     // Overwrite the value at index k in the original array with the
     // value at index j in the auxiliary array.
-    animations.push([k, auxiliaryArray[j]]);
+    animations.push([k, auxiliaryArray[j], -1]);
     mainArray[k++] = auxiliaryArray[j++];
   }
 }
