@@ -201,6 +201,16 @@ export default class SortingVisualizer extends React.Component {
               style={{ height: `${value}px` }}
             ></div>
           ))}
+          <div className="infoPanel">
+            <div>
+              <h3>
+
+              </h3>
+              <p>
+
+              </p>
+            </div>
+          </div>
         </div>
         <div className="control_container">
           <div className="speedSliderContainer">

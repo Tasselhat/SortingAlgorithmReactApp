@@ -12,7 +12,7 @@ function bubbleSort(auxiliaryArray, animations) {
 
   for (let i = 0; i < length; i++) {
     // Start iterative loop that runs n times
-    // Set boolean to check if the array is already sorted
+    // Reset boolean to check if the array is already sorted
     swapped = false;
     for (let j = 0; j < length; j++) {
       // Second iteration to compare each element of the array
